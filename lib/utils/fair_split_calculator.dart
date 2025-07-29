@@ -279,8 +279,12 @@ class FairSplitCalculator {
 
     // Step 2: Calculate percentages based on total income including joint
     final totalIncome = partner1TotalIncome + partner2TotalIncome;
-    final partner1Percentage = (partner1TotalIncome / totalIncome) * 100;
-    final partner2Percentage = (partner2TotalIncome / totalIncome) * 100;
+    final partner1Percentage = totalIncome == 0
+        ? 0.0
+        : (partner1TotalIncome / totalIncome) * 100;
+    final partner2Percentage = totalIncome == 0
+        ? 0.0
+        : (partner2TotalIncome / totalIncome) * 100;
 
     _debugLogStep(
       'Steps 1-2',
@@ -347,8 +351,12 @@ class FairSplitCalculator {
 
     // Step 2: Calculate percentages based on total income including joint
     final totalIncome = partner1TotalIncome + partner2TotalIncome;
-    final partner1Percentage = (partner1TotalIncome / totalIncome) * 100;
-    final partner2Percentage = (partner2TotalIncome / totalIncome) * 100;
+    final partner1Percentage = totalIncome == 0
+        ? 0.0
+        : (partner1TotalIncome / totalIncome) * 100;
+    final partner2Percentage = totalIncome == 0
+        ? 0.0
+        : (partner2TotalIncome / totalIncome) * 100;
 
     // Step 3: Split only joint expenses by percentage, keep personal expenses separate
     final partner1JointShare =
@@ -466,81 +474,126 @@ class FairSplitCalculator {
     );
   }
 
-  static FairSplitScenario _calculateEvenEdgeSplitSeparateBills(FairSplitInputs inputs) {
+  static FairSplitScenario _calculateEvenEdgeSplitSeparateBills(
+    FairSplitInputs inputs,
+  ) {
     _debugLogScenario('SEPARATE BILLS (Personal bills remain separate)');
-    
+
     // Step 1: Calculate individual incomes (including joint income share)
-    final partner1TotalIncome = inputs.partner1Income + (inputs.jointIncome / 2);
-    final partner2TotalIncome = inputs.partner2Income + (inputs.jointIncome / 2);
+    final partner1TotalIncome =
+        inputs.partner1Income + (inputs.jointIncome / 2);
+    final partner2TotalIncome =
+        inputs.partner2Income + (inputs.jointIncome / 2);
     final totalIncome = partner1TotalIncome + partner2TotalIncome;
-    
-    _debugLogStep('Step 1', 'Calculate total income for each partner', values: {
-      'Partner 1 Total Income': partner1TotalIncome,
-      'Partner 2 Total Income': partner2TotalIncome,
-      'Total Household Income': totalIncome,
-    });
+
+    _debugLogStep(
+      'Step 1',
+      'Calculate total income for each partner',
+      values: {
+        'Partner 1 Total Income': partner1TotalIncome,
+        'Partner 2 Total Income': partner2TotalIncome,
+        'Total Household Income': totalIncome,
+      },
+    );
 
     // Step 2: Calculate equal remaining amount after JOINT bills only (ignore personal bills for now)
     final totalRemainingAfterJointBills = totalIncome - inputs.jointOutgoings;
     final equalRemainingAfterJointBills = totalRemainingAfterJointBills / 2;
-    
-    _debugLogStep('Step 2', 'Calculate equal remaining after JOINT bills only', values: {
-      'Joint Bills Only': inputs.jointOutgoings,
-      'Total Remaining After Joint Bills': totalRemainingAfterJointBills,
-      'Equal Remaining After Joint Bills': equalRemainingAfterJointBills,
-    });
+
+    _debugLogStep(
+      'Step 2',
+      'Calculate equal remaining after JOINT bills only',
+      values: {
+        'Joint Bills Only': inputs.jointOutgoings,
+        'Total Remaining After Joint Bills': totalRemainingAfterJointBills,
+        'Equal Remaining After Joint Bills': equalRemainingAfterJointBills,
+      },
+    );
 
     // Step 3: Calculate how much each partner contributes to joint bills to achieve equal remaining after joint bills
-    final partner1JointContribution = partner1TotalIncome - equalRemainingAfterJointBills;
-    final partner2JointContribution = partner2TotalIncome - equalRemainingAfterJointBills;
-    
-    _debugLogStep('Step 3', 'Calculate joint bill contributions for equal remaining after joint bills', values: {
-      'Partner 1 Joint Contribution': partner1JointContribution,
-      'Partner 2 Joint Contribution': partner2JointContribution,
-      'Total Joint Contributions': partner1JointContribution + partner2JointContribution,
-      'Should Equal Joint Bills': inputs.jointOutgoings,
-      'Difference': (partner1JointContribution + partner2JointContribution) - inputs.jointOutgoings,
-    });
+    final partner1JointContribution =
+        partner1TotalIncome - equalRemainingAfterJointBills;
+    final partner2JointContribution =
+        partner2TotalIncome - equalRemainingAfterJointBills;
+
+    _debugLogStep(
+      'Step 3',
+      'Calculate joint bill contributions for equal remaining after joint bills',
+      values: {
+        'Partner 1 Joint Contribution': partner1JointContribution,
+        'Partner 2 Joint Contribution': partner2JointContribution,
+        'Total Joint Contributions':
+            partner1JointContribution + partner2JointContribution,
+        'Should Equal Joint Bills': inputs.jointOutgoings,
+        'Difference':
+            (partner1JointContribution + partner2JointContribution) -
+            inputs.jointOutgoings,
+      },
+    );
 
     // Step 4: Now each partner pays their own personal bills from their remaining amount
-    final partner1AfterJointBills = partner1TotalIncome - partner1JointContribution;
-    final partner2AfterJointBills = partner2TotalIncome - partner2JointContribution;
-    final partner1FinalRemaining = partner1AfterJointBills - inputs.partner1Outgoings;
-    final partner2FinalRemaining = partner2AfterJointBills - inputs.partner2Outgoings;
-    
-    _debugLogStep('Step 4', 'Each partner pays their own personal bills (separate)', values: {
-      'Partner 1 After Joint Bills': partner1AfterJointBills,
-      'Partner 2 After Joint Bills': partner2AfterJointBills,
-      'Partner 1 Personal Bills': inputs.partner1Outgoings,
-      'Partner 2 Personal Bills': inputs.partner2Outgoings,
-      'Partner 1 Final Remaining': partner1FinalRemaining,
-      'Partner 2 Final Remaining': partner2FinalRemaining,
-    });
+    final partner1AfterJointBills =
+        partner1TotalIncome - partner1JointContribution;
+    final partner2AfterJointBills =
+        partner2TotalIncome - partner2JointContribution;
+    final partner1FinalRemaining =
+        partner1AfterJointBills - inputs.partner1Outgoings;
+    final partner2FinalRemaining =
+        partner2AfterJointBills - inputs.partner2Outgoings;
+
+    _debugLogStep(
+      'Step 4',
+      'Each partner pays their own personal bills (separate)',
+      values: {
+        'Partner 1 After Joint Bills': partner1AfterJointBills,
+        'Partner 2 After Joint Bills': partner2AfterJointBills,
+        'Partner 1 Personal Bills': inputs.partner1Outgoings,
+        'Partner 2 Personal Bills': inputs.partner2Outgoings,
+        'Partner 1 Final Remaining': partner1FinalRemaining,
+        'Partner 2 Final Remaining': partner2FinalRemaining,
+      },
+    );
 
     // Step 5: Calculate total spend for display
-    final partner1TotalSpend = partner1JointContribution + inputs.partner1Outgoings;
-    final partner2TotalSpend = partner2JointContribution + inputs.partner2Outgoings;
-    
-    _debugLogStep('Step 5', 'Calculate total spend (joint contribution + personal bills)', values: {
-      'Partner 1: Joint Contribution': partner1JointContribution,
-      'Partner 1: Personal Bills': inputs.partner1Outgoings,
-      'Partner 1: Total Spend': partner1TotalSpend,
-      'Partner 2: Joint Contribution': partner2JointContribution,
-      'Partner 2: Personal Bills': inputs.partner2Outgoings,
-      'Partner 2: Total Spend': partner2TotalSpend,
-    });
+    final partner1TotalSpend =
+        partner1JointContribution + inputs.partner1Outgoings;
+    final partner2TotalSpend =
+        partner2JointContribution + inputs.partner2Outgoings;
+
+    _debugLogStep(
+      'Step 5',
+      'Calculate total spend (joint contribution + personal bills)',
+      values: {
+        'Partner 1: Joint Contribution': partner1JointContribution,
+        'Partner 1: Personal Bills': inputs.partner1Outgoings,
+        'Partner 1: Total Spend': partner1TotalSpend,
+        'Partner 2: Joint Contribution': partner2JointContribution,
+        'Partner 2: Personal Bills': inputs.partner2Outgoings,
+        'Partner 2: Total Spend': partner2TotalSpend,
+      },
+    );
 
     // VERIFICATION: Double-check the math
-    final partner1CalculatedRemaining = partner1TotalIncome - partner1TotalSpend;
-    final partner2CalculatedRemaining = partner2TotalIncome - partner2TotalSpend;
-    
-    _debugLogStep('VERIFICATION', 'Double-check remaining amounts', values: {
-      'Partner 1 Calculated Remaining': partner1CalculatedRemaining,
-      'Partner 2 Calculated Remaining': partner2CalculatedRemaining,
-      'Partner 1 Final Remaining': partner1FinalRemaining,
-      'Partner 2 Final Remaining': partner2FinalRemaining,
-      'Amounts Should Match': partner1CalculatedRemaining == partner1FinalRemaining && partner2CalculatedRemaining == partner2FinalRemaining ? 1.0 : 0.0,
-    });
+    final partner1CalculatedRemaining =
+        partner1TotalIncome - partner1TotalSpend;
+    final partner2CalculatedRemaining =
+        partner2TotalIncome - partner2TotalSpend;
+
+    _debugLogStep(
+      'VERIFICATION',
+      'Double-check remaining amounts',
+      values: {
+        'Partner 1 Calculated Remaining': partner1CalculatedRemaining,
+        'Partner 2 Calculated Remaining': partner2CalculatedRemaining,
+        'Partner 1 Final Remaining': partner1FinalRemaining,
+        'Partner 2 Final Remaining': partner2FinalRemaining,
+        'Amounts Should Match':
+            partner1CalculatedRemaining == partner1FinalRemaining &&
+                partner2CalculatedRemaining == partner2FinalRemaining
+            ? 1.0
+            : 0.0,
+      },
+    );
 
     return FairSplitScenario(
       scenarioName: 'Personal Bills Separate',
