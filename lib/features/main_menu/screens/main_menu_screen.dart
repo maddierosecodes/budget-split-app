@@ -1,5 +1,5 @@
 import 'package:evenedge/features/budget_calculator/screens/budget_calculator_screen.dart';
-import 'package:evenedge/features/fair_split/screens/fair_split_input_screen.dart';
+import 'package:evenedge/features/fair_split/screens/fair_split_info_screen.dart';
 import 'package:evenedge/features/settings/screens/settings_screen.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class MainMenuScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const FairSplitInputScreen(),
+                    builder: (context) => const FairSplitInfoScreen(),
                   ),
                 );
               },

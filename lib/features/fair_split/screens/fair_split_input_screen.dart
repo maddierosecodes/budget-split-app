@@ -1,5 +1,6 @@
 import 'package:evenedge/features/fair_split/screens/fair_split_results_screen.dart';
 import 'package:evenedge/utils/fair_split_calculator.dart';
+import 'package:evenedge/utils/currency_input_formatter.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:evenedge/widgets/common/custom_text_field.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
@@ -13,6 +14,7 @@ class FairSplitInputScreen extends StatefulWidget {
 }
 
 class _FairSplitInputScreenState extends State<FairSplitInputScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _partner1IncomeController =
       TextEditingController();
   final TextEditingController _partner2IncomeController =
@@ -37,16 +39,48 @@ class _FairSplitInputScreenState extends State<FairSplitInputScreen> {
   }
 
   void _calculateFairSplit() {
-    // Parse input values, defaulting to 0 if parsing fails
+    // Validate form first
+    if (!_formKey.currentState!.validate()) {
+      // Show error message and scroll to first error
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fix the errors above before continuing'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Parse input values (guaranteed to be valid numbers due to validation)
     final inputs = FairSplitInputs(
-      partner1Income: double.tryParse(_partner1IncomeController.text) ?? 0,
-      partner2Income: double.tryParse(_partner2IncomeController.text) ?? 0,
-      jointIncome: double.tryParse(_jointIncomeController.text) ?? 0,
-      partner1Outgoings:
-          double.tryParse(_partner1OutgoingsController.text) ?? 0,
-      partner2Outgoings:
-          double.tryParse(_partner2OutgoingsController.text) ?? 0,
-      jointOutgoings: double.tryParse(_jointOutgoingsController.text) ?? 0,
+      partner1Income: double.parse(
+        _partner1IncomeController.text.isEmpty
+            ? '0'
+            : _partner1IncomeController.text,
+      ),
+      partner2Income: double.parse(
+        _partner2IncomeController.text.isEmpty
+            ? '0'
+            : _partner2IncomeController.text,
+      ),
+      jointIncome: double.parse(
+        _jointIncomeController.text.isEmpty ? '0' : _jointIncomeController.text,
+      ),
+      partner1Outgoings: double.parse(
+        _partner1OutgoingsController.text.isEmpty
+            ? '0'
+            : _partner1OutgoingsController.text,
+      ),
+      partner2Outgoings: double.parse(
+        _partner2OutgoingsController.text.isEmpty
+            ? '0'
+            : _partner2OutgoingsController.text,
+      ),
+      jointOutgoings: double.parse(
+        _jointOutgoingsController.text.isEmpty
+            ? '0'
+            : _jointOutgoingsController.text,
+      ),
     );
 
     // Calculate results using the utility function
@@ -68,48 +102,93 @@ class _FairSplitInputScreenState extends State<FairSplitInputScreen> {
         leading: const CustomBackButton(),
         title: const Text('Fair Split Calculator'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            CustomTextField(
-              labelText: 'Partner 1 Income',
-              controller: _partner1IncomeController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Partner 2 Income',
-              controller: _partner2IncomeController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Joint Income',
-              controller: _jointIncomeController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Partner 1 Outgoings',
-              controller: _partner1OutgoingsController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Partner 2 Outgoings',
-              controller: _partner2OutgoingsController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Joint Outgoings',
-              controller: _jointOutgoingsController,
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 32),
-            PrimaryButton(onPressed: _calculateFairSplit, text: 'Calculate'),
-          ],
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              CustomTextField(
+                labelText: 'Partner 1 Income',
+                controller: _partner1IncomeController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Partner 1 Income'),
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                labelText: 'Partner 2 Income',
+                controller: _partner2IncomeController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Partner 2 Income'),
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                labelText: 'Joint Income',
+                controller: _jointIncomeController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Joint Income'),
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                labelText: 'Partner 1 Outgoings',
+                controller: _partner1OutgoingsController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Partner 1 Outgoings'),
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                labelText: 'Partner 2 Outgoings',
+                controller: _partner2OutgoingsController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Partner 2 Outgoings'),
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                labelText: 'Joint Outgoings',
+                controller: _jointOutgoingsController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [CurrencyInputFormatter()],
+                prefixText: '£ ',
+                hintText: '0.00',
+                validator: (value) =>
+                    validateCurrencyInput(value, 'Joint Outgoings'),
+              ),
+              const SizedBox(height: 32),
+              PrimaryButton(onPressed: _calculateFairSplit, text: 'Calculate'),
+            ],
+          ),
         ),
       ),
     );
