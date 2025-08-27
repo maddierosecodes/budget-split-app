@@ -73,7 +73,7 @@ class AppTextStyles {
   );
 
   static final bodyMedium = GoogleFonts.inter(
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: AppFlatColors.deepPurple900,
   );
@@ -85,7 +85,7 @@ class AppTextStyles {
   );
 
   static final labelLarge = GoogleFonts.workSans(
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: FontWeight.w500,
     color: AppFlatColors.deepPurple900,
   );

@@ -10,7 +10,7 @@ class AppTheme {
         primary: AppFlatColors.green600,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: AppFlatColors.green50,
+      scaffoldBackgroundColor: AppFlatColors.yellow400,
       textTheme: TextTheme(
         displayLarge: AppTextStyles.displayLarge,
         displayMedium: AppTextStyles.displayMedium,

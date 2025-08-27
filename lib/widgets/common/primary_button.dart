@@ -24,8 +24,8 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppFlatColors.green600,
-          foregroundColor: Colors.white,
+          backgroundColor: AppFlatColors.purple800,
+          foregroundColor: AppFlatColors.green900,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               30,
@@ -37,7 +37,7 @@ class PrimaryButton extends StatelessWidget {
         child: Text(
           text,
           style: AppTextStyles.labelLarge.copyWith(
-            color: Colors.white,
+            color: AppFlatColors.green300,
             fontWeight: FontWeight.w600,
           ),
         ),
