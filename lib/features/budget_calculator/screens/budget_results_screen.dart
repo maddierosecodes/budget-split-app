@@ -1,3 +1,4 @@
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class BudgetResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Budget Results'),
+        title: const AppBarTitle(title: 'Budget Results'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

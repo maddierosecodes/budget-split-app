@@ -1,4 +1,5 @@
 import 'package:evenedge/utils/fair_split_calculator.dart';
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:evenedge/widgets/common/household_info_box.dart';
 import 'package:evenedge/widgets/common/result_box.dart';
@@ -19,7 +20,7 @@ class FairSplitResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Fair Split Results'),
+        title: const AppBarTitle(title: 'Fair Split Results'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -1,3 +1,4 @@
+import 'package:evenedge/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -70,16 +71,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
         labelText: widget.labelText,
         hintText: widget.hintText,
         prefixText: widget.prefixText,
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(
+            color: AppFlatColors.brown900,
+            width: 1.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(
+            color: AppFlatColors.green600,
+            width: 2.0,
+          ),
+        ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.error,
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(
+            color: AppFlatColors.purple900,
             width: 2.0,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.error,
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(
+            color: AppFlatColors.purple900,
             width: 2.0,
           ),
         ),

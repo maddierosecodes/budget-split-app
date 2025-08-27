@@ -1,6 +1,7 @@
 import 'package:evenedge/features/fair_split/screens/fair_split_results_screen.dart';
 import 'package:evenedge/utils/fair_split_calculator.dart';
 import 'package:evenedge/utils/currency_input_formatter.dart';
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:evenedge/widgets/common/custom_text_field.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
@@ -100,7 +101,7 @@ class _FairSplitInputScreenState extends State<FairSplitInputScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Fair Split Calculator'),
+        title: const AppBarTitle(title: 'Fair Split Calculator'),
       ),
       body: Form(
         key: _formKey,

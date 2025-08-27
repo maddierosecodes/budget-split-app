@@ -1,3 +1,5 @@
+import 'package:evenedge/theme/colors.dart';
+import 'package:evenedge/theme/typography.dart';
 import 'package:flutter/material.dart';
 
 class HouseholdInfoBox extends StatelessWidget {
@@ -20,8 +22,6 @@ class HouseholdInfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     // Calculate totals
     final totalHouseholdIncome = partner1Income + partner2Income + jointIncome;
     final totalHouseholdBills =
@@ -43,22 +43,26 @@ class HouseholdInfoBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: theme.primaryColor.withOpacity(0.1),
+        color: AppFlatColors.green100.withOpacity(0.5),
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: theme.primaryColor),
+        border: Border.all(color: AppFlatColors.green600),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline, color: theme.primaryColor, size: 20),
+              const Icon(
+                Icons.info_outline,
+                color: AppFlatColors.green600,
+                size: 20,
+              ),
               const SizedBox(width: 8),
               Text(
                 'Household Summary',
-                style: theme.textTheme.titleMedium?.copyWith(
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: theme.primaryColor,
+                  color: AppFlatColors.green600,
                 ),
               ),
             ],
@@ -74,15 +78,15 @@ class HouseholdInfoBox extends StatelessWidget {
                   children: [
                     Text(
                       'Total Household Income',
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '£${totalHouseholdIncome.toStringAsFixed(2)}',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.green[700],
+                      style: AppTextStyles.titleMedium.copyWith(
+                        color: AppFlatColors.green600,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -95,15 +99,15 @@ class HouseholdInfoBox extends StatelessWidget {
                   children: [
                     Text(
                       'Total Household Bills',
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '£${totalHouseholdBills.toStringAsFixed(2)}',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.red[700],
+                      style: AppTextStyles.titleMedium.copyWith(
+                        color: AppFlatColors.purple900,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -118,7 +122,7 @@ class HouseholdInfoBox extends StatelessWidget {
           // Income Percentages
           Text(
             'Income Distribution',
-            style: theme.textTheme.bodyMedium?.copyWith(
+            style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -130,30 +134,30 @@ class HouseholdInfoBox extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: AppFlatColors.brown50,
                     borderRadius: BorderRadius.circular(6.0),
-                    border: Border.all(color: Colors.blue[200]!),
+                    border: Border.all(color: AppFlatColors.brown100),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Partner 1',
-                        style: theme.textTheme.bodySmall?.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '${partner1Percentage.toStringAsFixed(1)}%',
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: Colors.blue[700],
+                        style: AppTextStyles.titleSmall.copyWith(
+                          color: AppFlatColors.brown900,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '£${partner1TotalIncome.toStringAsFixed(2)}',
-                        style: theme.textTheme.bodySmall,
+                        style: AppTextStyles.bodySmall,
                       ),
                     ],
                   ),
@@ -164,30 +168,30 @@ class HouseholdInfoBox extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: Colors.orange[50],
+                    color: AppFlatColors.brown50,
                     borderRadius: BorderRadius.circular(6.0),
-                    border: Border.all(color: Colors.orange[200]!),
+                    border: Border.all(color: AppFlatColors.brown100),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Partner 2',
-                        style: theme.textTheme.bodySmall?.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '${partner2Percentage.toStringAsFixed(1)}%',
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: Colors.orange[700],
+                        style: AppTextStyles.titleSmall.copyWith(
+                          color: AppFlatColors.brown900,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '£${partner2TotalIncome.toStringAsFixed(2)}',
-                        style: theme.textTheme.bodySmall,
+                        style: AppTextStyles.bodySmall,
                       ),
                     ],
                   ),

@@ -1,5 +1,9 @@
 import 'package:evenedge/features/fair_split/screens/fair_split_input_screen.dart';
+import 'package:evenedge/theme/colors.dart';
+import 'package:evenedge/theme/typography.dart';
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
+import 'package:evenedge/widgets/common/info_container.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -11,41 +15,35 @@ class FairSplitInfoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Fair Split Calculator'),
+        title: const AppBarTitle(title: 'Fair Split Calculator'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                padding: const EdgeInsets.all(20.0),
+              child: InfoContainer(
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Welcome to the Fair Split Calculator',
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        'Fair Split Calculator',
+                        style: AppTextStyles.headlineSmall.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'This calculator is designed for two-adult households to help create a fairer financial split that tackles inequalities typically faced by women and gender minorities in household financial management.',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: AppTextStyles.bodyLarge,
                       ),
                       const SizedBox(height: 20),
                       Text(
                         'Choose from 3 Different Methods:',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTextStyles.titleMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       _buildMethodCard(
@@ -78,14 +76,10 @@ class FairSplitInfoScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).primaryColor.withOpacity(0.1),
+                          color: AppFlatColors.green100.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
-                            color: Theme.of(
-                              context,
-                            ).primaryColor.withOpacity(0.3),
+                            color: AppFlatColors.green600.withOpacity(0.5),
                           ),
                         ),
                         child: Column(
@@ -93,13 +87,14 @@ class FairSplitInfoScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Our Mission',
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(fontWeight: FontWeight.bold),
+                              style: AppTextStyles.titleSmall.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'EvenEdge aims to promote financial equity in relationships by providing tools that help partners make informed decisions about money management, addressing historical imbalances in household financial responsibilities.',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: AppTextStyles.bodyMedium,
                             ),
                           ],
                         ),
@@ -135,29 +130,27 @@ class FairSplitInfoScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppFlatColors.green50,
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: Theme.of(context).dividerColor, width: 1.0),
+        border: Border.all(color: AppFlatColors.brown100, width: 1.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            style: AppTextStyles.titleSmall.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
           ),
           const SizedBox(height: 6),
-          Text(description, style: Theme.of(context).textTheme.bodyMedium),
+          Text(description, style: AppTextStyles.bodyMedium),
           const SizedBox(height: 6),
           Text(
             impact,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: Theme.of(
-                context,
-              ).textTheme.bodySmall?.color?.withOpacity(0.8),
+              color: AppTextStyles.bodySmall.color?.withOpacity(0.8),
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:evenedge/features/budget_calculator/screens/budget_incoming_scre
 import 'package:evenedge/features/budget_calculator/screens/budget_outgoing_screen.dart';
 import 'package:evenedge/features/budget_calculator/screens/budget_results_screen.dart';
 import 'package:evenedge/features/budget_calculator/screens/budget_settings_screen.dart';
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class BudgetCalculatorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Budget Calculator'),
+        title: const AppBarTitle(title: 'Budget Calculator'),
       ),
       body: Center(
         child: Column(

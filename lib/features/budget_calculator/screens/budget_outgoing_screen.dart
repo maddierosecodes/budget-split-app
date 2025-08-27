@@ -1,3 +1,4 @@
+import 'package:evenedge/widgets/common/app_bar_title.dart';
 import 'package:evenedge/widgets/common/back_button.dart';
 import 'package:evenedge/widgets/common/custom_text_field.dart';
 import 'package:evenedge/widgets/common/primary_button.dart';
@@ -11,7 +12,7 @@ class BudgetOutgoingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text('Budget Outgoing'),
+        title: const AppBarTitle(title: 'Budget Outgoing'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

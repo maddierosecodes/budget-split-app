@@ -1,3 +1,5 @@
+import 'package:evenedge/theme/colors.dart';
+import 'package:evenedge/theme/typography.dart';
 import 'package:flutter/material.dart';
 
 class ResultBox extends StatelessWidget {
@@ -68,7 +70,6 @@ class ResultBox extends StatelessWidget {
     Color backgroundColor,
     Color? borderColor,
   ) {
-    final theme = Theme.of(context);
     final percentages = _calculateFreeIncomePercentages(
       partner1Remaining,
       partner2Remaining,
@@ -86,7 +87,7 @@ class ResultBox extends StatelessWidget {
         children: [
           Text(
             scenarioName,
-            style: theme.textTheme.titleMedium?.copyWith(
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -118,9 +119,9 @@ class ResultBox extends StatelessWidget {
           // Free Income Distribution
           Text(
             'Free Income Distribution',
-            style: theme.textTheme.bodySmall?.copyWith(
+            style: AppTextStyles.bodySmall.copyWith(
               fontWeight: FontWeight.w600,
-              color: theme.primaryColor,
+              color: AppFlatColors.green600,
             ),
           ),
           const SizedBox(height: 6),
@@ -131,23 +132,23 @@ class ResultBox extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
-                    color: Colors.blue[100],
+                    color: AppFlatColors.brown50,
                     borderRadius: BorderRadius.circular(4.0),
-                    border: Border.all(color: Colors.blue[300]!),
+                    border: Border.all(color: AppFlatColors.brown100),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Partner 1',
-                        style: theme.textTheme.bodySmall?.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         '${percentages['partner1']!.toStringAsFixed(1)}%',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.blue[700],
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppFlatColors.brown900,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -160,23 +161,23 @@ class ResultBox extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
-                    color: Colors.orange[100],
+                    color: AppFlatColors.brown50,
                     borderRadius: BorderRadius.circular(4.0),
-                    border: Border.all(color: Colors.orange[300]!),
+                    border: Border.all(color: AppFlatColors.brown100),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Partner 2',
-                        style: theme.textTheme.bodySmall?.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         '${percentages['partner2']!.toStringAsFixed(1)}%',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.orange[700],
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppFlatColors.brown900,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -193,17 +194,16 @@ class ResultBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        border: Border.all(color: theme.primaryColor),
+        border: Border.all(color: AppFlatColors.green600),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: theme.textTheme.titleLarge),
+          Text(title, style: AppTextStyles.titleLarge),
           const SizedBox(height: 16),
 
           // Joint Bills Scenario
@@ -214,7 +214,7 @@ class ResultBox extends StatelessWidget {
             jointPartner1Remaining,
             jointPartner2Spend,
             jointPartner2Remaining,
-            theme.primaryColor.withOpacity(0.1),
+            AppFlatColors.green100.withOpacity(0.5),
             null,
           ),
 
@@ -228,8 +228,8 @@ class ResultBox extends StatelessWidget {
             separatePartner1Remaining,
             separatePartner2Spend,
             separatePartner2Remaining,
-            theme.primaryColor.withOpacity(0.05),
-            theme.primaryColor.withOpacity(0.3),
+            AppFlatColors.green100.withOpacity(0.2),
+            AppFlatColors.green600.withOpacity(0.5),
           ),
         ],
       ),
